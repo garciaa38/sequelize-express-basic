@@ -20,7 +20,12 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         isTitleCased(value) {
-
+          const titles = value.split(' ');
+          for (let title of titles) {
+            if (title[0] !== title[0].toUpperCase()) {
+              throw new Error('Capitalize each word please');
+            }
+          }
         }
       }
     },
@@ -35,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     millimeters: {
       type: DataTypes.FLOAT,
+      allowNull: false,
       validate: {
         min: 0
       }
